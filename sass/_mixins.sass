@@ -1,0 +1,65 @@
+@mixin perfix($prop, $val)
+   -webkit-#{$prop}: $val
+   -moz-#{$prop}: $val
+   -o-#{$prop}: $val
+   #{$prop}: $val
+
+@mixin anim($name)
+   @keyframes #{$name}
+      @content
+
+@mixin fadeOut()
+   @keyframes fadeOut
+      0%
+         opacity: 1
+      100%
+         opacity: 0
+   
+@mixin fadeIn()
+   @keyframes fadeIn
+      0%
+         opacity: 0
+      100%
+         opacity: 1
+
+@mixin moveUp()
+   @keyframes moveUp
+      0% 
+         margin-top: 30px
+         opacity: 0
+      100%
+         margin-top: 0px
+         opacity: 1
+
+@mixin moveUp2()
+   @keyframes moveUp2
+      0% 
+         margin-top: 60px
+         opacity: 0
+      100%
+         margin-top: 0px
+         opacity: 1
+
+@mixin moveDown()
+   @keyframes moveDown
+      0% 
+         margin-top: 0px
+         opacity: 1
+      100%
+         margin-top: 30px
+         opacity: 0
+
+@mixin animMove($num, $prop, $max, $min)
+   @keyframes animMove#{$num}
+      0%
+         #{$prop}: #{$max}px
+      100%
+         #{$prop}: #{$min}px
+
+@mixin spinner()
+   @keyframes spinner
+      0%
+         @include perfix(transform, rotate(0deg))
+      100%
+         @include perfix(transform, rotate(179deg))
+         

@@ -1,0 +1,1386 @@
+@import '_variables.sass'
+@import '_mixins.sass'
+
+/*** Global ***/
+body
+   font-size: $mainFontSize
+   font-family: $mainFont
+   padding-top: 66px
+   overflow: hidden
+body.active
+   overflow: auto
+%bg-icon
+   width: 46px
+   height: 46px
+   background-image: url(../images/icon/icons.png)
+   background-repeat: no-repeat
+%main-btn
+   border-radius: 35px
+   padding: 6px 15px
+   min-width: 125px
+   font-size: $mainFontSize
+   border: 2px solid
+%full
+   position: absolute
+   top: 0
+   left: 0
+   bottom: 0
+   right: 0
+   width: 100%
+   height: 100%
+   z-index: 99999
+.btn, .btn:focus, .btn:active,
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.form-control, .form-control:active, .form-control:focus
+   outline: none
+   box-shadow: none
+.main-btn
+   @extend %main-btn
+
+h1, h2, h3, h4, h5, h6
+   font-weight: $bold
+   color: $mainColor
+p
+   margin-bottom: 10px
+section
+   position: relative   
+.top-lg
+   margin-top: $space-lg   
+.btm-lg
+   margin-bottom: $space-lg
+.top2-lg
+   padding-top: $space-lg   
+.btm2-lg
+   padding-bottom: $space-lg   
+.top-md
+   margin-top: $space-md    
+.btm-md
+   margin-bottom: $space-md   
+.top-sm
+   margin-top: $space-sm    
+.btm-sm
+   margin-bottom: $space-sm
+.btm-sm3
+   margin-bottom: $space-sm3
+.btm-xs
+   margin-bottom: $space-xs
+.btm-xs2
+   margin-bottom: $space-xs2
+.top-xs
+   margin-top: $space-xs
+.left-sm2
+   margin-left: $space-sm2
+.right-sm2
+   margin-right: $space-sm2
+.bold
+   font-weight: $bold
+.bold2
+   font-weight: 700
+p:not(.bold)
+   color: $grayColor2
+p.bold
+   color: $darkColor
+.icon
+   color: $mainColor
+   margin-right: 7px
+   font-size: 16px
+.highlight
+   color: $mainColor!important
+/* Media Query */
+@media only screen and (min-width: 1599px)
+   .container
+      max-width: 1300px
+@media only screen and (max-width: 991px)
+   body
+      font-size: $mdFontSize
+   .main-btn
+      min-width: inherit
+@media only screen and (max-width: 767px)
+   .top-lg
+      margin-top: $space-md2
+   .btm-lg
+      margin-bottom: $space-md2
+   .btm2-lg
+      padding-bottom: $space-md2
+   .top2-lg
+      padding-top: $space-md2
+   .top-md
+      margin-top: $space-sm3
+   .btm-md
+      margin-bottom: $space-sm3
+   .top-sm
+      margin-top: $space-xs2
+   .btm-sm
+      margin-bottom: $space-xs2
+   p
+      margin-bottom: $space-xs
+   .left-sm2, .right-sm2
+      margin-left: 0
+      margin-right: 0
+   
+/*** Navbar ***/
+.navbar 
+   min-height: 66px
+   background-color: $mainColor
+   padding-right: 15px
+   padding-left: 15px
+   box-shadow: 0px 2px 4px -1px rgba(0,0,0,.15)
+   z-index: 9999999
+   .navbar-toggler
+      width: 34px
+      span
+         display: block
+         width: 100%
+         height: 2px
+         background-color: #fff
+         transition: $mdTransition
+         &:not(:last-child)
+            margin-bottom: 6px
+   .navbar-toggler.active
+      span:nth-child(1)
+         @include perfix(transform, rotate(-45deg) translate(-6px, 7px))
+      span:nth-child(2)
+         opacity: 0
+      span:nth-child(3)
+         @include perfix(transform, rotate(45deg) translate(-4px, -6px))
+   .navbar-collapse
+      a.nav-link
+         position: relative
+         padding-left: 0
+         padding-right: 0
+         margin: 0 0.5rem
+      a.nav-link.active::before
+         width: 100%
+         animation: leftLine 0.5s ease-in-out             
+      a::before
+         content: ''
+         position: absolute
+         left: 0
+         bottom: 0
+         width: 0%
+         height: 2px
+         background-color: $lightColor
+         animation: rightLine 0.5s ease-in-out
+   li
+      &:not(:last-child)
+         margin-right: 20px
+      button
+         transition: $fastTransition
+         &:hover
+            color: $lightColor
+            @include perfix(transform, scale(1.08))
+            transition: $fastTransition
+      a, button
+         color: $lightColor
+         font-weight: $bold
+         font-size: $mainFontSize
+      .messages-btn
+         width: 36px
+         height: 36px
+         .messages-icon
+            @extend %bg-icon
+            width: 100%
+            height: 100%
+            background-size: 185px
+      .main-btn
+         transition: $fastTransition
+         &:hover
+            color: $mainColor
+            @include perfix(transform, scale(1.08))
+            transition: $fastTransition
+            border-color: $lightColor
+            background-color: $lightColor
+
+/* Media Query */
+@media only screen and (min-width: 1599px)
+   .navbar li:not(:last-child)
+      margin-right: 30px
+@media only screen and (max-width: 991px)
+   .navbar
+      .container
+         padding: 0px
+      ul.navbar-nav
+         li
+            .messages-btn
+               width: 32px
+               height: 32px
+               .messages-icon
+                  background-size: 166px
+            & button
+               font-size: $mdFontSize
+         li:not(:last-child)
+            margin-right: 10px
+      ul.navbar-nav:first-child
+         a.nav-link
+            margin: 0 3px
+@media only screen and (max-width: 767px)
+   .navbar 
+      ul.navbar-nav li:not(:last-child)
+         margin-right: 0px
+      .nav-btn-container 
+         position: absolute
+         right: 0
+         ul
+            flex-direction: inherit
+            li:not(:last-child)
+               margin-right: 15px
+      .navbar-collapse
+         position: absolute
+         top: 42px
+         width: calc(100% + 30px)
+         left: -15px
+         background-color: $mainColor
+         border: none
+         padding: 0px 15px 0px 15px
+         overflow: hidden
+         height: inherit
+         opacity: 0
+      .navbar-collapse.ready
+         display: block
+         opacity: 1
+         height: 0px
+         animation: navListUp $mdTransition
+      .navbar-collapse.ready.active
+         animation: navListDown $mdTransition
+      ul
+         padding: 5px 0 10px 0
+
+/* Animation */
+@include anim(rightLine)
+   0%
+      left: auto
+      right: 0
+      width: 100%
+   100%
+      right: 0
+      left: auto
+      width: 0
+@include anim(leftLine)
+   0%
+      left: 0
+      right: auto
+      width: 0
+   100%
+      width: 100%
+      left: 0
+      right: auto
+
+/*** Company Info ***/
+.section-company
+   background-color: $lightColor
+   .container
+      z-index: 3
+   .company-logo
+      max-width: 170px
+   .company-info p
+      font-size: 18px
+   .header-curve
+      margin-top: -40px
+      z-index: 1
+      img
+         width: 100%
+         vertical-align: inherit
+         top: -3px
+/* Media Query */
+@media only screen and (max-width: 767px)
+   .section-company
+      .container
+         padding-bottom: 50px
+      .content > div:not(:last-child)
+         margin-bottom: $space-xs2
+
+/*** Instructions ***/
+.instructions-section
+   padding-bottom: 40px
+   background: linear-gradient(-45deg, #23E5F3, #13B2E1)
+   .container
+      z-index: 2
+   .row:first-child .box-content
+      margin-top: 70px
+   .row:not(:first-child)
+      flex-direction: row-reverse
+   .info-icon
+      @extend %bg-icon
+      background-size: 219px
+      background-position: -86px 3px
+   h3
+      line-height: 38px
+      padding-right: 90px
+      color: $lightColor
+      font-weight: $semiBold
+   .box-content 
+      margin-bottom: $space-md
+      .inner-content
+         border-radius: 5px
+         background-color: $lightColor
+         padding: 22px
+         box-shadow: 0 0 17px 1px rgba(0,0,0,0.15)
+         .num
+            font-size: 54px
+            line-height: 45px
+            color: $secondColor
+            margin-bottom: 22px
+/* Media Query */
+@media only screen and (max-width: 991px)
+   .instructions-section
+      h3
+         padding-right: 0px
+@media only screen and (max-width: 767px)
+   .instructions-section
+      padding-bottom: 50px
+      .row:not(:first-child)
+         flex-direction: inherit
+      h3
+         margin-bottom: $space-md2
+      .box-content
+         margin-bottom: $space-sm2
+         &:last-child
+            margin-bottom: 0px
+
+/*** Invoice Section ***/
+.invoice-section
+   .container > div:not(:last-child)
+      border-bottom: 2px solid $secondColor
+   h3
+      font-weight: $semiBold
+   p span
+      margin-right: 7px
+   .client-icon,.invoice-icon, .payment-icon
+      @extend %bg-icon
+      background-position: -139px 1px
+      background-size: 232px
+   .invoice-icon
+      background-position: -187px 0px
+   .content-txt
+      padding-left: 25px
+      .txt .highlight
+         margin-right: 7px
+   .payment-info
+      .content-txt
+         max-width: 88%
+      .table-heading > div:not(:last-child),
+      .table-content .row > div:not(:last-child)
+         padding-right: 15px
+      .table-content .row:not(:last-child)
+         border-bottom: 1px solid $grayColor
+         margin-bottom: $space-xs
+      .payment-icon
+         background-position: 0px -45px
+         height: 33px
+      .acount-name, .acount-num
+         width: 24%
+         flex: 0 0 24%
+      .payment-method, .payment-status
+         width: 19%
+         flex: 0 0 19%
+      .payment-amount
+         width: 14%
+         flex: 0 0 14%
+
+/* Media Query */
+@media only screen and (max-width: 991px)
+   .invoice-section
+      .left-sm2, .right-sm2
+         margin: 0
+      .invoice-client .row.no-gutters
+         margin-top: 10px
+      .invoice-info .row:nth-child(2) > div
+         &:first-child
+            order: 2
+         &:last-child
+            order: 1
+      .payment-info
+         .content-txt
+            max-width: 100%
+@media only screen and (max-width: 767px)
+   .invoice-section
+         .content-txt
+            padding-right: 25px
+         .table-heading
+            display: none
+         .table-content .row
+            .payment-cell
+               display: flex
+               width: 50%
+               flex: 0 0 50%
+               p:first-child
+                  font-weight: 600
+                  padding-right: 7px
+            .payment-cell:nth-child(even)
+               padding-right: 0px
+
+@media only screen and (max-width: 500px)
+   .invoice-section
+      .payment-info .table-content .row > div.payment-cell
+         width: 100%
+         flex: 0 0 100%
+         padding-right: 0px
+
+@media only screen and (min-width: 768px)
+   .invoice-section
+      .payment-info .mob-heading
+         display: none
+
+/*** Product Section ***/
+.product-section
+   background-color: $thirdColor
+   h3
+      line-height: 38px
+      font-weight: $semiBold
+   .product-icon
+      @extend %bg-icon
+      background-position: -43px -44px
+      background-size: 221px
+   .product-table
+      box-shadow: 0px 3px 7px 0px rgba(0,0,0,.11)
+      .table-heading
+         padding: 0 $productTableCellSpace
+         background-color: $mainColor
+         p
+            color: $lightColor
+            padding: $productTableCellSpace 0
+      .product-cell:not(:last-child)
+         border-right: 1px solid $lightColor
+         padding-right: $productTableCellSpace
+      .product-cell:not(:first-child)
+         padding-left: $productTableCellSpace
+         text-align: center
+      .product-name
+         width: 32.502%
+         flex: 0 0 32.502%
+      .product-quantity
+         width: 10.5%
+         flex: 0 0 10.5%
+      .product-unit
+         width: 7%
+         flex: 0 0 7%
+      .product-price
+         width: 11.5%
+         flex: 0 0 11.5%
+      .product-discount
+         width: 11.5%
+         flex: 0 0 11.5%
+      .product-w-discount
+         width: 11.5%
+         flex: 0 0 11.5%
+      .product-total
+         width: 11.5%
+         flex: 0 0 11.5%
+      .product-options
+         width: 4%
+         flex: 0 0 4%
+      .dots span
+         width: 6px
+         height: 6px
+         background-color: $lightColor
+      .table-content
+         background-color: $lightColor
+         .current-products
+            .add-btn-container
+               display: none
+            .row-container.empty-row
+               color: #b3b1b1
+               background-color: #efefef
+               font-size: 16px
+               overflow: hidden
+               p
+                  padding: 18px 0
+         .optional-products
+            .control-icons
+               display: none!important
+            .add-btn-container
+               button
+                  padding: 0
+                  font-size: $mdFontSize
+                  background-color: $mainColor
+                  color: $lightColor
+                  height: 100%
+                  width: 147%
+                  margin-left: -7px
+                  border-radius: 5px
+                  transition: all $mdTransition
+                  &:hover
+                     background-color: $darkMainColor
+         .table-title
+            color: $lightColor
+            background-color: $mainColor
+            padding: $productTableCellSpace
+         .row-container
+            overflow: hidden
+         & > div
+            & > div
+               padding: 0 $productTableCellSpace
+               &:not(:last-child)
+                  border-bottom: 1px solid $secondColor
+         .product-cell:not(:first-child),
+         .product-cell:not(:first-child) p
+            font-size: $lgFontSize
+            color: $darkColor
+         .product-cell.product-total p
+            color: $greenColor
+         .product-cell:not(:last-child)
+            border-color: $secondColor
+         .product-cell
+            padding-top: $productTableCellSpace
+            padding-bottom: 2px
+            display: flex
+            justify-content: center
+            align-items: center
+         .product-pic
+            width: 47%
+            flex: 0 0 47%
+            padding-right: $productTableCellSpace
+            .pic
+               position: relative
+               border-radius: 5px
+               overflow: hidden
+               cursor: pointer
+               .overlay
+                  @extend %full
+                  display: flex
+                  opacity: 0
+                  color: $lightColor
+                  font-size: 32px
+                  background-color: rgba(0,0,0,.55)
+                  transition: $mdTransition
+               &:hover .overlay
+                  opacity: 1
+         .product-name
+            .description
+               font-size: 14px
+               &:not(.active) .txt2
+                  display: none
+               .len-btn
+                  cursor: pointer
+         .product-quantity
+            .inner-cotent
+               padding-bottom: 6px
+               input
+                  font-family: inherit
+                  font-size: $lgFontSize
+                  color: $darkColor
+                  background-color: transparent
+                  height: inherit
+                  cursor: auto
+                  top: 0
+                  transition: all 0.2s ease-in-out
+               input.active
+                  top: -6px
+               button
+                  border: 2px solid
+                  width: 26px
+                  height: 26px
+                  font-size: 13px
+                  padding: 0.5px 0 0 0
+                  color: $mainColor
+                  &:hover
+                     color: $lightColor
+                     background-color: $mainColor
+                     border-color: $mainColor
+               button.btn-plus
+                  padding-left: 0.5px
+               button:active
+                  padding-top: 1px
+                  @include perfix(transform, scale(0.9))
+         .product-options
+            .inner-content
+               width: 100%
+               padding-bottom: 6px
+               .option-icon
+                  width: 100%
+                  @include perfix(transform, scale(1.18))
+                  cursor: pointer
+                  height: 30px
+                  @extend %bg-icon
+               .discuss-icon
+                  background-position: -30px 0px
+                  background-size: 153px
+               .delete-icon
+                  background-size: 121px
+                  background-position: -74px -24px
+                  margin: 25px auto 0 3px
+                  width: 24px
+   .droplist-container
+      display: none
+      right: 4px
+      border-radius: 5px
+      background-color: $lightColor
+      font-size: $mdFontSize
+      padding: 10px 10px 4px 10px
+      box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.2)
+      border: 1px solid $grayColor
+      animation: moveDown $mdTransition
+      z-index: 99999
+      &::after
+         content: ''
+         position: absolute
+         top: -6px
+         right: 15px
+         border: 7px solid
+         border-color: transparent $lightColor $lightColor transparent
+         border-radius: 4px
+         transform: rotate(-135deg)
+         box-shadow: 1px 1px 1px 0px rgba(0,0,0,.18)
+      .drop-title p
+         color: $darkColor
+      .drop-item
+         border-radius: 5px
+         border: 1px solid $grayColor
+         padding: 8px 10px 0px 10px
+         margin-bottom: 6px
+         cursor: pointer
+         p
+            color: $mainColor
+            margin-bottom: 8px
+         &:hover
+            background-color: $mainColor
+            p
+               color: $lightColor
+      &.active
+         display: block
+         animation: moveUp $mdTransition
+      &.active2
+         display: block
+         animation: moveDown $mdTransition
+         .drop-item
+            background-color: $lightColor
+            p
+               color: $mainColor
+         
+.product-cover-overlay
+   @extend %full
+   display: none
+   background-color: rgba(0,0,0,0.9)
+   animation: fadeOut $mdTransition
+   .inner-cover
+      padding-top: 91px
+      width: 100%
+      justify-content: center
+      padding-bottom: 25px
+      img
+         width: 70%
+      .cover-close-icon
+         top: 91px
+         right: 40px
+         color: $lightColor
+         font-size: 50px
+         z-index: 9999999
+         cursor: pointer
+.product-cover-overlay.active
+   display: flex
+   animation: fadeIn $mdTransition
+.product-cover-overlay.active2
+   display: flex
+   animation: fadeOut $mdTransition
+
+@media only screen and (max-width: 1199px)
+   .product-section
+      .product-table
+         .table-heading p
+            font-size: 12px
+         .table-content
+            .product-cell:not(:first-child),
+            .product-cell:not(:first-child) p,
+            .product-quantity .inner-cotent input
+               font-weight: 500
+               font-size: 18px
+            .table-title,
+            .optional-products .add-btn-container button
+               font-size: 12px
+            .product-options
+               .inner-content .discuss-icon
+                  background-position: -25px 0px
+                  background-size: 125px
+                  height: 25px
+               .inner-content .delete-icon
+                  background-size: 99px
+                  background-position: -59px -19px
+            .product-content .title
+               font-size: $mdFontSize
+            .product-name .description
+               font-size: 13px
+      .droplist-container::after
+         right: 8px
+   .product-cover-overlay
+      .inner-cover
+         img
+            width: 65%
+
+@media only screen and (max-width: 991px)
+   .product-section
+      .droplist-container
+         right: 22px
+      .product-table
+         .table-heading
+            display: none
+         .table-content .product-name
+            flex: 0 0 100%
+            width: 100%
+            border-right: none!important
+            padding-right: 0px!important
+            padding-bottom: 0px
+            .description
+               font-size: 15px
+               margin-bottom: 25px
+         .table-content
+            .table-title
+               font-size: 15px
+            .optional-products .add-btn-container button
+               width: 100%
+               margin-left: 0px
+               padding: 10px
+               font-size: 15px
+            .product-quantity .inner-cotent
+               padding-bottom: 0px
+               & > div
+                  justify-content: center!important
+                  & > button:first-child
+                     margin-right: 19px
+            .product-options .inner-content
+               padding-bottom: 0px
+            .product-content .title
+               font-size: 18px
+            .row-container 
+               padding: 10px 20px
+               & > .product-cell:not(:first-child)
+                  display: none
+               .mob-content
+                  .table-mob-content
+                     display: flex
+                     flex-wrap: wrap
+                     border-left: 2px solid $mainColor
+                     border-bottom: 2px solid $mainColor
+                  .mob-row
+                     width: 33.335%
+                     flex: 0 0 33.335%
+                     .mob-title p
+                        font-weight: 600
+                        color: $lightColor
+                        background-color: $mainColor
+                        padding: 2px 12px
+                        margin: 0
+                     .product-cell
+                        width: 100%
+                        padding: 15px 12px
+                        height: calc(100% - 25px)
+                        border-right: 2px solid $mainColor
+                  .mob-row:last-child
+                     & .product-options,
+                     & .product-options .inner-content
+                        height: 100%
+                  .table-mob-btn .mob-row
+                     width: 100%
+                     flex: 0 0 100%
+                     .product-cell
+                        padding: 12px 0px
+                        border-right: none
+                  .mob-title
+                     text-align: center
+                  .control-icons
+                     display: flex
+                     .btn-icon
+                        width: 50%
+                        flex: 0 0 50%
+                        display: flex
+                        justify-content: center
+                        padding: 3px
+                        border-radius: 5px
+                        cursor: pointer
+                        max-width: 48.5%
+                        min-height: 44px
+                        transition: all $mdTransition
+                     .btn-delete-icon
+                        background-color: $dangerColor
+                        margin-left: auto
+                        &:hover
+                           background-color: $darkDangerColor
+                        .delete-icon
+                           margin: 0px
+                           transform: none
+                           width: 27px
+                           height: 34px
+                           background-size: 140px
+                           background-position: -113px -28px
+                           margin-top: 3px
+                     .btn-discuss-icon
+                        background-color: $mainColor
+                        margin-right: auto
+                        &:hover
+                           background-color: $darkMainColor
+                        .discuss-icon
+                           height: 35px
+                           width: 36px
+                           background-position: 0px -62px
+                           background-size: 176px
+                           margin-top: 2.5px
+                           transform: none
+            .product-name .inner-content
+               flex-wrap: wrap
+               .product-pic,
+               .product-content
+                  width: 100%
+                  flex: 0 0 100%
+                  padding-right: 0px
+               .product-pic
+                  margin-bottom: 20px
+   .product-cover-overlay
+      .inner-cover
+         .cover-close-icon
+            right: 10px
+         img
+            width: 95%
+
+@media only screen and (max-width: 600px)
+   .product-section
+      .product-table
+         .table-content .row-container .mob-content .table-mob-content
+            flex-wrap: wrap
+            .mob-row
+               width: 50%
+               flex: 0 0 50%
+@media only screen and (min-width: 992px)
+   .product-section
+      .product-table
+         .mob-content
+            display: none
+@media only screen and (min-width: 1599px)
+   .product-section
+      .product-table
+         .table-content .optional-products .add-btn-container button
+            width: 140%
+            margin-left: -8px
+/*** Start Total Section ***/
+.total-section
+   h3
+      font-weight: 400
+   .total-icon
+      @extend %bg-icon
+      background-size: 180px
+      background-position: -72px -36px
+      height: 62px
+      width: 35px
+   .total-container
+      .row
+         p
+            color: #333
+            font-size: 16px
+         .total-num
+            color: $greenColor
+      .border-btm
+         border-bottom: 2px solid $secondColor
+         p
+            margin-bottom: $space-xs
+   .total-box-container
+      .total-box
+         p
+            font-size: 32px
+            color: $darkColor
+            font-weight: 500
+         p:first-child
+            margin-right: 25px
+         p:last-child
+            background-color: $greenColor
+            color: $lightColor
+            padding: 10px 35px
+@media only screen and (max-width: 991px)
+   .total-section
+      .total-box-container
+         .total-box p
+            font-size: 28px
+@media only screen and (max-width: 400px)
+   .total-section
+      .total-container
+         .row p
+            font-size: 15px
+      .total-box-container
+         .total-box p
+            font-size: 23px
+
+/*** Start Footer Section ***/
+.footer-section
+   .top-footer
+      background-color: $topFooterColor
+      h3
+         line-height: 38px
+         color: $lightColor
+      .signature-container
+         max-width: 240px
+         margin-left: auto
+         p
+            color: #fff
+            text-align: center
+            font-size: 20px
+            font-weight: 500
+         .sign-box
+            background-color: $lightColor
+            border-radius: 5px
+            overflow: hidden
+            padding: 5px
+            min-height: 100px
+            cursor: pointer
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,.1)
+            img, .overlay
+               display: none
+            input
+               position: absolute
+               left: 0
+               top: 0
+               right: 0
+               bottom: 0
+               width: 0
+               height: 0
+               opacity: 0
+               cursor: pointer
+            .plcholder
+               font-weight: 600
+               color: #afafaf
+         .sign-box.active
+            .plcholder
+               display: none
+            img
+               display: block
+         .sign-box.loading, .sign-box.loading2
+            .overlay
+               @extend %full
+               display: block
+               cursor: auto
+               background-color: rgba(0,0,0,.5)
+               .check-icon
+                  display: none
+               .spinner
+                  width: 40px
+                  height: 40px
+                  border: 4px solid
+                  border-color: transparent $mainColor
+                  animation: spinner 0.3s linear infinite
+               .spinner-container, .check-icon
+                  top: 50%
+                  left: 50%
+                  @include perfix(transform, translate(-50%, -50%))
+            .overlay.active
+               .spinner-container
+                  opacity: 0
+                  animation: fadeOut $mdTransition
+               .check-icon
+                  display: inline-block
+                  color: $greenColor
+                  background-color: $lightColor
+                  font-size: 32px
+                  width: 28px
+                  height: 17px
+                  display: flex
+                  animation: fadeIn $mdTransition
+         .sign-box.loading2 .overlay
+            opacity: 0
+            animation: fadeOut $mdTransition
+      .approve-btn
+         color: $lightColor
+         font-family: inherit
+         font-size: 20px
+         background-color: $mainColor
+         transition: all $mdTransition
+         padding: 10px
+         border-radius: 5px
+         &:hover
+            background-color: $darkMainColor
+      .approve-btn.disabled
+         cursor: auto
+         &:hover
+            background-color: $mainColor
+   .btm-footer
+      background-color: $btmFooterColor
+      p
+         color: $lightColor
+         padding: 10px
+         font-size: 14px
+         a
+            color: $mainColor
+@media only screen and (max-width: 575px)
+   .footer-section
+      .top-footer
+         .signature-container
+            margin: 35px auto 20px auto
+
+/*** Pay Now Container ***/
+.pay-now-container
+   @extend %full
+   display: none
+   background-color: rgba(185,185,185, 0.8)
+   .content
+      padding: 20px
+      border-radius: 5px
+      background-color: $lightColor
+      max-width: 450px
+      width: 100%
+      opacity: 0
+      .form-check
+         padding: 0px
+      .title p
+         color: $darkColor
+      .close-icon
+         right: -9px
+         top: -21px
+         font-size: 35px
+         background-color: $lightColor
+         height: 45px
+         width: 45px
+         cursor: pointer
+         color: $darkColor
+      .paynow-icon
+         font-size: 42px
+         color: $mainColor
+         line-height: 0px
+      .card-icon
+         @extend %bg-icon
+         background-position: 0px -57px
+         background-size: 286px
+         margin: 0 auto 10px auto
+         height: 37px
+         width: 56px
+      .payment-box
+         margin-top: 20px
+         cursor: pointer
+         .inner-box
+            padding: 15px
+            min-width: 150px
+            min-height: 104px
+            background-color: $lightColor
+            opacity: 0.5
+            border-radius: 5px
+            transition: all $mdTransition
+            .card-txt
+               color: $mainColor
+      .payment-box:not(:last-child)
+         margin-right: 20px
+      .payment-box.active
+         .inner-box
+            background-color: $fourthColor
+            opacity: 1
+      .payment-method
+         margin-bottom: 35px
+      form
+         padding: 0 15px
+         .form-content
+            input
+               border: none
+               border-bottom: 1px solid $grayColor
+               border-radius: 0px
+               font-family: inherit
+               font-weight: 600
+               color: $darkColor
+               padding: 0
+               font-size: 15px
+               background-color: transparent
+            label
+               left: 0
+               top: 6px
+               margin-bottom: 0
+               font-size: 14px
+               color: #afafaf
+               font-style: italic
+               cursor: text
+               transition: all 0.19s ease-in-out
+            input:focus
+               border-color: $mainColor!important
+            input:focus + label
+               top: -15px
+               font-size: 13px
+               color: $mainColor
+               font-weight: 600
+               font-style: normal
+         .form-group.active
+            label
+               top: -15px
+               font-size: 13px
+               font-weight: 600
+               font-style: normal
+         .form-group.invalid
+            label
+               color: $dangerColor
+            input
+               border-color: $dangerColor
+         .card-num-container::before,
+         .sec-code-container::before
+            content: ''
+            position: absolute
+            right: 0
+            top: 0
+            background-color: $lightColor
+            width: 16px
+            height: 33px
+         .pay-btn button
+            font-family: inherit
+            font-size: 15px
+            color: $lightColor
+            background-color: $mainColor
+            padding: 10px
+            margin-top: 15px
+            transition: $mdTransition
+            &:not(.disabled):hover
+               background-color: $darkMainColor
+            &.disabled
+               cursor: auto
+.pay-now-container.active
+   display: flex
+   animation: fadeIn $mdTransition
+   .content.active
+      opacity: 1
+      animation: moveUp2 $mdTransition
+.pay-now-container.active2
+   display: flex
+   animation: fadeOut $mdTransition
+   opacity: 0
+
+@media only screen and (max-width: 500px)
+   .pay-now-container
+      .content
+         max-width: 88%
+         .payment-method
+            margin-bottom: 25px
+         form .pay-btn button
+            margin-top: 5px
+         .card-icon
+            background-position: 0px -50px
+            background-size: 255px
+            height: 34px
+            width: 49px
+         .payment-box .inner-box
+            min-width: 140px
+            min-height: 96px
+         .paynow-icon
+            font-size: 34px
+@media only screen and (max-width: 400px)
+   .pay-now-container
+      .content
+         .payment-box:not(:last-child)
+            margin-right: 10px
+         .payment-box .inner-box
+            min-width: 115px
+            padding: 10px
+
+/*** ChatBox Container ***/
+.chatbox-container
+   display: none
+   right: -580px
+   top: 0
+   width: 100%
+   max-width: 580px
+   height: 100%
+   padding-top: 66px
+   background-color: $lightColor
+   box-shadow: -4px 0px 18px 0px rgba(0,0,0,.15)
+   z-index: 999999
+   overflow: hidden
+   opacity: 0
+   .content
+      background-color: $mainColor
+      .title p
+         font-size: 18px
+         color: $lightColor
+      .chat-date p 
+         font-size: 14px
+         color: $lightColor
+         margin-bottom: 0px
+      .chat-heading
+         text-align: center
+         padding: 15px
+         .chat-close
+            font-size: 45px
+            left: 15px
+            color: $lightColor
+            height: 45px
+            top: 50%
+            @include perfix(transform, translateY(-50%))
+         .chat-info
+            padding: 0 70px
+      .chat-txt-box
+         background-color: $lightColor
+         padding: 15px 70px 15px 30px
+         min-height: 64px
+         cursor: text
+         border: 1px solid $grayColor
+         max-width: 95%
+         width: 100%
+         border-radius: 35px
+         #chat-txtbox
+            border: none
+            background-color: transparent
+            height: 32px
+            font-size: 15px
+            font-family: inherit
+            color: $darkColor
+            padding: 0px
+            font-weight: 600
+            position: relative
+            z-index: 1
+         .txtbox-plcholder
+            top: 20px
+            left: 30px
+            font-style: italic
+            color: #b5b5b5
+            z-index: 0
+         .chat-sendmsg
+            right: 15px
+            top: 50%
+            @include perfix(transform, translateY(-50%))
+            color: $lightColor
+            background-color: $mainColor
+            font-size: 18px
+            width: 44px
+            height: 44px
+            padding: 0 4px 0 0
+            z-index: 9999
+            transition: $mdTransition
+            &:hover
+               background-color: $darkMainColor
+      .chat-txt-box.active
+         .txtbox-plcholder
+            display: none
+      .chat-content
+         height: calc(100% - 115px)
+         width: 100%
+         background-color: $lightColor
+         border-radius: 35px
+         padding: 0px 0px 25px 0px
+         border-top: 2px solid $lightMainColor
+         border-bottom: 2px solid $lightMainColor
+         .chat-inner-content
+            height: calc(100% - 97px)
+            width: 100%
+            overflow: hidden
+            margin-bottom: 25px
+            border-top-right-radius: 35px
+            border-top-left-radius: 35px
+            .product-info
+               position: absolute
+               bottom: 0
+               width: calc(100% - 30px)
+               left: 15px
+               padding: 10px
+               background-color: $lightColor
+               height: 66.6px
+               border-radius: 4px
+               border: 1px solid $grayColor
+               .chatbox-protag-close
+                  right: 10px
+                  color: #51c9ec
+                  top: 5px
+                  font-size: 20px
+                  cursor: pointer
+                  display: none
+               &:hover
+                  .chatbox-protag-close
+                     display: block
+               .pic
+                  width: auto
+                  height: 46.66px
+                  margin-right: 10px
+                  text-align: center
+                  flex: 0 0 auto
+                  img
+                     border-radius: 4px
+               .title
+                  font-weight: 600
+                  color: $mainColor
+                  padding-bottom: 1px
+            .messages-container
+               bottom: 0px
+               overflow-y: auto
+               overflow-x: hidden 
+               height: 100%
+               width: 100%
+               padding: 0 15px
+               &::-webkit-scrollbar
+                  width: 10px
+               &::-webkit-scrollbar-track
+                  background-color: #e4e4e4
+               &::-webkit-scrollbar-thumb
+                  border-radius: 5px
+                  background-color: $mainColor
+               .inner-messages
+                  & > div
+                     display: flex
+                     margin-top: 25px
+                  .msg-bubble
+                     max-width: 80%
+                     padding: 15px 20px 20px 20px
+                     font-size: 15px
+                     word-break: break-word
+                  .receive-msg
+                     .pic
+                        width: 50px
+                        height: 50px
+                        margin-right: 10px
+                        flex: 0 0 50px
+                     .msg-bubble
+                        background-color: $thirdColor
+                        border-top-right-radius: 35px
+                        border-bottom-right-radius: 35px
+                        border-bottom-left-radius: 35px
+                        border-top-left-radius: 4px
+                  .send-msg
+                     justify-content: flex-end
+                     flex-wrap: wrap
+                     .product-info
+                        position: static
+                        margin-right: 10px
+                        max-width: 80%
+                        border-bottom-right-radius: 0px
+                        border-bottom-left-radius: 0px
+                        height: inherit
+                        .chatbox-protag-close
+                           display: none
+                     .msg-bubble
+                        color: #fff
+                        background-color: $mainColor
+                        margin-right: 10px
+                        border-top-left-radius: 35px
+                        border-top-right-radius: 4px
+                        border-bottom-left-radius: 35px
+                        border-bottom-right-radius: 35px
+                  .send-msg.active
+                     .msg-bubble
+                        border-top-right-radius: 0px
+                        border-top-left-radius: 0px
+                        flex: 0 0 100%
+         .chat-inner-content.active
+            .messages-container
+               .inner-messages
+                  padding-bottom: 92px
+
+            
+
+.chatbox-container.active
+   @include animMove(1,right, -580, 0)
+   display: block
+   animation: animMove1 0.65s ease-in-out
+   right: 0px
+   opacity: 1
+.chatbox-container.active2
+   @include animMove(2,right, 0, -580)
+   display: block
+   animation: animMove2 0.65s ease-in-out
+   right: -580px
+   opacity: 1
+
+/*** Page Loader ***/
+.page-loader
+   @extend %full
+   background-color: $lightColor
+   z-index: 9999999
+   .spinner
+      border: 40px solid
+      border-color: transparent $mainColor
+      animation: spinner 0.3s linear infinite
+.page-loader.active
+   animation: fadeOut $mdTransition
+   opacity: 0
+/*** Global Animation ***/
+@include fadeIn()
+@include fadeOut()
+@include moveUp()
+@include moveUp2()
+@include moveDown()
+@include spinner()
