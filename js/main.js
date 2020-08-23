@@ -16,7 +16,8 @@ const globalObj = {
       hideRowTitle: false,
       emptyList: false,
       signature: false,
-      pageLoaderImagesCounter: 0
+      pageLoaderImagesCounter: 0,
+      hangingFun: null
    },
    closest: function(ele, name) {
       while (ele !== document.querySelector('html')) {
@@ -43,6 +44,23 @@ const globalObj = {
       if (ele === document.querySelector('html')) {
          return false;
       }
+   },
+   openPopup: function(overlay) {
+      overlay.classList.add('active');
+      setTimeout(function() {
+         overlay.querySelector('.content').classList.add('active');
+      }, 300);
+   },
+   closePopup: function(e) {
+      let overlay = globalObj.closest(e.target, '.overlay-full');
+      overlay.classList.add('active2');
+      setTimeout(function() {
+         overlay.classList.remove('active');
+         overlay.classList.remove('active2');
+         if (overlay.querySelector('.content')) {
+            overlay.querySelector('.content').classList.remove('active');
+         }
+      }, 260);
    }
 };
 // Page Loader
@@ -146,12 +164,20 @@ pageLoaderFun();
       } else if (globalObj.closest(e.target, '.table-content') === document.querySelector('.product-section .table-content')) {
          // On Click on Product table
          productTableFun(e);
-      } else if (e.target.classList.contains('pay-now-container') || globalObj.closest(e.target, '.close-paynow')) {
-         // PayNow popup close
-         payNowPopupClose(e);
+      } else if ((e.target.classList.contains('overlay-full') || globalObj.closest(e.target, '.close-icon')) || globalObj.closest(e.target, '.cancel-btn')) {
+         // close Popup
+         globalObj.closePopup(e);
+         globalObj.status.hangingFun = null;
       } else if (globalObj.closest(e.target, '.payment-box') && globalObj.closest(e.target, '.pay-now-container')) {
          // PayNow Choose Payment Method
          payNowChoosePayMethod(globalObj.closest(e.target, '.payment-box'));
+      } else if (globalObj.closest(e.target, '.accept-btn')) {
+         // On click on accept button
+         // Close popup
+         globalObj.closePopup(e);
+         // Call hangaing function
+         eval(globalObj.status.hangingFun);
+         globalObj.status.hangingFun = null;
       }
       if (globalObj.closest(e.target, '.messages-btn')) {
          // Display ChatBox on click on messages navbar icon
@@ -286,7 +312,7 @@ function insBoxContent() {
 // Payment Info Table Mobile Screen
 function paymentInfoTable() {
    let section = document.querySelector('.invoice-section'),
-       tableHeading = document.querySelector('.table-heading').children,
+       tableHeading = section.querySelector('.table-heading').children,
        tableContent = section.querySelector('.table-content').children;
    if (window.innerWidth <= 767 && !section.classList.contains('active')) {
       section.classList.add('active');
@@ -341,7 +367,7 @@ function productZoomImg(ele) {
       // Create Overlay
       let div = document.createElement('div');
       div.className = 'product-cover-overlay position-fixed justify-content-center align-items-center w-100 h-100';
-      div.innerHTML = '<div class="inner-cover h-100 d-flex align-items-center position-relative"><span class="cover-close-icon position-absolute d-flex"><i class="far fa-times-circle"></i></span><img class="img-fluid" src="#" alt=""></div>';
+      div.innerHTML = '<div class="inner-cover h-100 align-items-center position-relative"><span class="cover-close-icon position-absolute d-flex"><i class="far fa-times-circle"></i></span><img class="img-fluid" src="#" alt=""></div>';
       document.body.appendChild(div);
       // Hide Overlay and image on click on close button or outside the image
       setTimeout(function() {
@@ -358,13 +384,20 @@ function productZoomImg(ele) {
       })
    }
    let cover = document.querySelector('.product-cover-overlay'),
-       coverImg = cover.querySelector('img');
-   coverImg.src = imgSrc;
+       coverImg = cover.querySelector('img'),
+       loader = document.createElement('div');
+   loader.className = 'spinner rounded-circle';
+   imgSrc = imgSrc.slice(0, -4) + '-big' + imgSrc.slice(-4);
+   coverImg.src = imgSrc
    if (img.getAttribute('alt')) {
       coverImg.setAttribute('alt', img.getAttribute('alt'));
    }
+   cover.appendChild(loader);
+   cover.classList.add('active');
+   coverImg.parentElement.style.display = 'none';
    coverImg.onload = function() {
-      cover.classList.add('active');
+      loader.remove();
+      coverImg.parentElement.style.display = 'flex';
    }
 }
 
@@ -419,11 +452,14 @@ function productHideDropList(e) {
    dropList.classList.remove('active');
    dropList.classList.add('active2');
    if (globalObj.closest(e.target, '.drop-item')) {
+      // Show confirmation popup
+      createCustomPopup(true, 'Are you sure?');
+      globalObj.openPopup(document.querySelector('.custom-popup'));
+      globalObj.status.hangingFun = 'productHideRowItem(true, false)';
       // Hide Row Container
       if (globalObj.status.currRowItem.parentElement.children.length <= 1) {
          globalObj.status.emptyList = true;
       }
-      productHideRowItem(true, false);
    }
    setTimeout(function() {
       dropList.classList.remove('active2');
@@ -727,10 +763,8 @@ function approveBtnFun() {
       // check validation
       payNowCheckValidation();
       payNowBtn.textContent = total.textContent;
-      container.classList.add('active');
-      setTimeout(function() {
-         container.querySelector('.content').classList.add('active');
-      }, 300);
+      // Open popup
+      globalObj.openPopup(container);
    }
 }
 
@@ -967,4 +1001,18 @@ function pageLoaderFun() {
          }, 280);
       }
    }
+}
+
+// Create a custom popup message
+function createCustomPopup(status, msg) {
+   if (document.querySelector('.custom-popup')) {
+      document.querySelector('.custom-popup').remove();
+   }
+   let div = document.createElement('div');
+   div.className = 'overlay-full custom-popup position-fixed justify-content-center align-items-center';
+   if (status) { // true => with overlay
+      div.classList.add('layer');
+   }
+   div.innerHTML = '<div class="popup-box content position-relative"><div class="close-icon d-flex justify-content-center align-items-center position-absolute rounded-circle"><i class="far fa-times-circle"></i></div><div class="popupbox-content text-center"><div class="popup-msg"><p class="bold">' + msg +'</p></div><div class="popup-control d-flex justify-content-center"><button class="btn cancel-btn" type="button">Cancel</button><button class="btn accept-btn" type="button">Yes</button></div></div></div>';
+   document.body.appendChild(div);
 }

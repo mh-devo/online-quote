@@ -62,4 +62,11 @@
          @include perfix(transform, rotate(0deg))
       100%
          @include perfix(transform, rotate(179deg))
+
+@mixin fullspinner()
+   @keyframes fullspinner
+      0%
+         @include perfix(transform, rotate(0deg))
+      100%
+         @include perfix(transform, rotate(359deg))
          

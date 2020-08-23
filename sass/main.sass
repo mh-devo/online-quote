@@ -28,7 +28,16 @@ body.active
    right: 0
    width: 100%
    height: 100%
-   z-index: 99999
+   z-index: 9999999
+%close-icon
+   right: -9px
+   top: -21px
+   font-size: 35px
+   background-color: $lightColor
+   height: 45px
+   width: 45px
+   cursor: pointer
+   color: $darkColor
 .btn, .btn:focus, .btn:active,
 .navbar-toggler,
 .navbar-toggler:focus,
@@ -88,6 +97,71 @@ p.bold
    font-size: 16px
 .highlight
    color: $mainColor!important
+
+/*** Custom Popup ***/
+.custom-popup, .overlay-full
+   @extend %full
+   display: none
+   .content
+      background-color: $lightColor
+      padding: 25px
+      border-radius: 5px
+      max-width: 350px
+      width: 100%
+      opacity: 0
+      .close-icon
+         @extend %close-icon
+      .popup-msg
+         font-size: 18px
+         margin-bottom: 20px
+      .popup-control
+         button
+            padding: 10px
+            font-weight: 700
+            font-size: 15px
+            max-width: 125px
+            width: 100%
+            border-radius: 5px
+            min-height: 46px
+            transition: all $mdTransition
+            &:first-child
+               margin-right: 10px
+            &:last-child
+               margin-right: 0px
+         .cancel-btn
+            background-color: #efefef
+            color: #909090
+            &:hover
+               background-color: #e2e2e2
+         .accept-btn
+            background-color: $mainColor
+            color: $lightColor
+            &:hover
+               background-color: $darkMainColor
+
+.overlay-full.active
+   display: flex
+   animation: fadeIn $mdTransition
+   .content.active
+      opacity: 1
+      animation: moveUp2 $mdTransition
+.overlay-full.active2
+   display: flex
+   animation: fadeOut $mdTransition
+   opacity: 0
+.overlay-full.layer
+   background-color: rgba(185,185,185, 0.8)
+
+@media only screen and (max-width: 500px)
+   .overlay-full
+      .content
+         max-width: 100%
+         width: 90%
+         .popup-msg
+            font-size: 15px
+            max-height: 380px
+            overflow-x: auto
+
 /* Media Query */
 @media only screen and (min-width: 1599px)
    .container
@@ -352,7 +426,7 @@ p.bold
       background-position: -139px 1px
       background-size: 232px
    .invoice-icon
-      background-position: -187px 0px
+      background-position: -186px 0px
    .content-txt
       padding-left: 25px
       .txt .highlight
@@ -537,6 +611,8 @@ p.bold
                border-radius: 5px
                overflow: hidden
                cursor: pointer
+               img
+                  width: 100%
                .overlay
                   @extend %full
                   display: flex
@@ -545,6 +621,7 @@ p.bold
                   font-size: 32px
                   background-color: rgba(0,0,0,.55)
                   transition: $mdTransition
+                  z-index: 999
                &:hover .overlay
                   opacity: 1
          .product-name
@@ -570,8 +647,8 @@ p.bold
                   top: -6px
                button
                   border: 2px solid
-                  width: 26px
-                  height: 26px
+                  width: 27px
+                  height: 27px
                   font-size: 13px
                   padding: 0.5px 0 0 0
                   color: $mainColor
@@ -579,8 +656,6 @@ p.bold
                      color: $lightColor
                      background-color: $mainColor
                      border-color: $mainColor
-               button.btn-plus
-                  padding-left: 0.5px
                button:active
                   padding-top: 1px
                   @include perfix(transform, scale(0.9))
@@ -612,7 +687,7 @@ p.bold
       box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.2)
       border: 1px solid $grayColor
       animation: moveDown $mdTransition
-      z-index: 99999
+      z-index: 99999999
       &::after
          content: ''
          position: absolute
@@ -654,11 +729,20 @@ p.bold
    display: none
    background-color: rgba(0,0,0,0.9)
    animation: fadeOut $mdTransition
+   .spinner
+      width: 60px
+      height: 60px
+      border: 20px solid
+      border-color: $lightColor $mainColor $lightColor $lightColor
+      animation: fullspinner 0.3s linear infinite
+      flex: 0 0 60px
    .inner-cover
+      display: flex
       padding-top: 91px
       width: 100%
       justify-content: center
       padding-bottom: 25px
+      animation: fadeIn $mdTransition
       img
          width: 70%
       .cover-close-icon
@@ -1020,14 +1104,7 @@ p.bold
       .title p
          color: $darkColor
       .close-icon
-         right: -9px
-         top: -21px
-         font-size: 35px
-         background-color: $lightColor
-         height: 45px
-         width: 45px
-         cursor: pointer
-         color: $darkColor
+         @extend %close-icon
       .paynow-icon
          font-size: 42px
          color: $mainColor
@@ -1122,16 +1199,6 @@ p.bold
                background-color: $darkMainColor
             &.disabled
                cursor: auto
-.pay-now-container.active
-   display: flex
-   animation: fadeIn $mdTransition
-   .content.active
-      opacity: 1
-      animation: moveUp2 $mdTransition
-.pay-now-container.active2
-   display: flex
-   animation: fadeOut $mdTransition
-   opacity: 0
 
 @media only screen and (max-width: 500px)
    .pay-now-container
@@ -1377,6 +1444,7 @@ p.bold
 .page-loader.active
    animation: fadeOut $mdTransition
    opacity: 0
+
 /*** Global Animation ***/
 @include fadeIn()
 @include fadeOut()
@@ -1384,3 +1452,4 @@ p.bold
 @include moveUp2()
 @include moveDown()
 @include spinner()
+@include fullspinner()
